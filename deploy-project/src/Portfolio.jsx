@@ -133,18 +133,19 @@ const LIGHT = {
 
 const SOCIAL_LINKS = {
   github: "https://github.com/priyanshu-kumar",
-  linkedin: "https://linkedin.com/in/priyanshu-kumar",
-  leetcode: "https://leetcode.com/u/priynshu30",
+  linkedin: "https://www.linkedin.com/in/priyanshu-kumar-94a2502b7/",
+  leetcode: "https://leetcode.com/u/_Priyanshu123/",
   email: "mailto:priyanshukumarr444@gmail.com",
-  resume: "#",
+  resume: "/resume.pdf",
 };
 
 const PROJECTS = [
-  { name: "UrbanCart", category: "Frontend", desc: "Premium e-commerce SPA managing 100+ products with cart, wishlist, search & filter, plus localStorage-based auth and full Vitest test coverage.", long: "UrbanCart is a fully responsive e-commerce single-page app built to feel production-grade without a real backend. It manages a catalog of 100+ products with live search, category filters, a persistent cart and wishlist (via localStorage), and a simulated JWT auth flow. Rendering was optimized with Redux Toolkit selectors to avoid unnecessary re-renders, and the whole app carries full unit + component test coverage using Vitest and React Testing Library.", tags: ["React", "TypeScript", "Redux Toolkit", "Tailwind"], from: "#2FE6A4", to: "#0B3B2C", github: "https://github.com/priyanshu-kumar/urbancart", live: "https://urbancart.vercel.app" },
-  { name: "DocCare", category: "Full-Stack", desc: "Full-stack doctor appointment platform with JWT auth, role-based access, and 10+ REST APIs for booking, reports, and history tracking.", long: "DocCare is a full-stack healthcare platform connecting patients and doctors. It supports secure JWT authentication with role-based access control, separate dashboards for patients and doctors, and profile management. On the backend, 10+ RESTful endpoints handle appointment booking, medical report uploads, and visit history — all built with Node.js, Express, and MongoDB, and wired to a React + Tailwind CSS frontend.", tags: ["React", "Node.js", "Express", "MongoDB"], from: "#8FA6FF", to: "#141633", github: "https://github.com/priyanshu-kumar/doccare", live: "https://doccare.vercel.app" },
-  { name: "Entertainment App", category: "Full-Stack", desc: "Movie & TV platform integrated with TMDB API — real-time search, bookmarks, authentication, and global state via Redux Toolkit.", long: "A movie and TV series discovery app powered by the TMDB API, offering real-time search, trending content, and bookmarking. User authentication and global app state (bookmarks, search history, theme) are managed with Redux Toolkit, and the responsive UI — built with Tailwind CSS — adapts smoothly from mobile to desktop.", tags: ["React", "Node.js", "TMDB API", "Redux"], from: "#D9B36C", to: "#332B14", github: "https://github.com/priyanshu-kumar/entertainment-app", live: "https://entertainment-app.vercel.app" },
+  { name: "UrbanCart", category: "Frontend", desc: "Premium e-commerce SPA managing 100+ products with cart, wishlist, search & filter, plus localStorage-based auth and full Vitest test coverage.", long: "UrbanCart is a fully responsive e-commerce single-page app built to feel production-grade without a real backend. It manages a catalog of 100+ products with live search, category filters, a persistent cart and wishlist (via localStorage), and a simulated JWT auth flow. Rendering was optimized with Redux Toolkit selectors to avoid unnecessary re-renders, and the whole app carries full unit + component test coverage using Vitest and React Testing Library.", tags: ["React", "TypeScript", "Redux Toolkit", "Tailwind"], from: "#2FE6A4", to: "#0B3B2C", github: "https://github.com/priynshu30/UrbanCart", live: "https://rococo-halva-b57f5a.netlify.app/" },
+  { name: "DocCare", category: "Full-Stack", desc: "Full-stack doctor appointment platform with JWT auth, role-based access, and 10+ REST APIs for booking, reports, and history tracking.", long: "DocCare is a full-stack healthcare platform connecting patients and doctors. It supports secure JWT authentication with role-based access control, separate dashboards for patients and doctors, and profile management. On the backend, 10+ RESTful endpoints handle appointment booking, medical report uploads, and visit history — all built with Node.js, Express, and MongoDB, and wired to a React + Tailwind CSS frontend.", tags: ["React", "Node.js", "Express", "MongoDB"], from: "#8FA6FF", to: "#141633", github: "https://github.com/priynshu30/doctor-appointment", live: "https://client-nine-lake-91.vercel.app/" },
+  { name: "Entertainment App", category: "Full-Stack", desc: "Movie & TV platform integrated with TMDB API — real-time search, bookmarks, authentication, and global state via Redux Toolkit.", long: "A movie and TV series discovery app powered by the TMDB API, offering real-time search, trending content, and bookmarking. User authentication and global app state (bookmarks, search history, theme) are managed with Redux Toolkit, and the responsive UI — built with Tailwind CSS — adapts smoothly from mobile to desktop.", tags: ["React", "Node.js", "TMDB API", "Redux"], from: "#D9B36C", to: "#332B14", github: "https://github.com/priynshu30/entertainment-app", live: "https://entertainment-app.vercel.app" },
+  { name: "Resume Analysis", category: "AI / Full-Stack", desc: "AI-powered resume analysis experience that scores resumes, highlights skill gaps, and suggests improvements for job applications.", long: "Resume Analysis is a modern web app that helps users evaluate resumes against job descriptions. It combines a polished interface with AI-assisted feedback to score content, identify missing skills, and recommend improvements so applicants can tailor their resumes more effectively.", tags: ["React", "Vite", "AI", "Tailwind"], from: "#6C63FF", to: "#1E1B4B", github: "https://github.com/priynshu30/Resume-Analysis-", live: "https://resume-analysis-gamma.vercel.app/" },
+  { name: "Real Estate Search", category: "Full-Stack", desc: "Modern property search experience with filters, listings, and responsive UI for home browsing and agent discovery.", long: "Real Estate Search is a polished property browsing interface that helps users find homes faster with smart search filters, featured listings, and a responsive design built for desktop and mobile. The app showcases listings with map previews, price ranges, and property details for a seamless house-hunting experience.", tags: ["React", "Vite", "Tailwind", "Web App"], from: "#5B9AFF", to: "#1D2F6F", github: "https://github.com/priynshu30/Real-state", live: "https://real-state-puce.vercel.app/" },
 ];
-
 const EXPERIENCE = [
   { year: "Apr 2026 — Present", role: "MERN Stack Developer Intern", org: "Corporate Finance Institute (CFI)", desc: "Building full-stack features with React, Node, Express & MongoDB; developing REST APIs with JWT auth in an Agile team." },
   { year: "Mar 2025 — Jan 2026", role: "Peer Mentor — JavaScript & React", org: "AlmaBetter (Remote)", desc: "Mentored 20+ peers in JavaScript and React fundamentals, improving project completion rates by 30%." },
@@ -298,7 +299,7 @@ function CodingProfile({ C, mono, display }) {
             </p>
           </>
         )}
-        <a href="https://leetcode.com/u/priynshu30" target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: C.green, textDecoration: "none", borderBottom: `1px solid ${C.green}` }}>
+        <a href={SOCIAL_LINKS.leetcode} target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: C.green, textDecoration: "none", borderBottom: `1px solid ${C.green}` }}>
           View profile →
         </a>
       </div>
@@ -311,7 +312,7 @@ function CodingProfile({ C, mono, display }) {
           style={{ width: "100%", maxWidth: 380, display: "block" }}
           onError={(e) => { e.target.style.display = "none"; }}
         />
-        <a href="https://github.com" target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: 8, fontSize: 12, color: C.green, textDecoration: "none", borderBottom: `1px solid ${C.green}` }}>
+        <a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer" style={{ display: "inline-block", marginTop: 8, fontSize: 12, color: C.green, textDecoration: "none", borderBottom: `1px solid ${C.green}` }}>
           View GitHub →
         </a>
       </div>
@@ -469,7 +470,7 @@ function botReply(input) {
     return "Hey! 👋 Ask me about my skills, projects, experience, or education — or just say hi to my resume.";
   }
   if (/(cv|resume|download)/.test(q)) {
-    return "You can grab my resume from the 'Download CV' button in the top nav.";
+    return "You can preview my resume from the 'Preview Resume' button in the top nav.";
   }
   if (/(thank|thanks)/.test(q)) {
     return "Anytime! Let me know if there's anything else you'd like to know.";
@@ -818,6 +819,14 @@ export default function Portfolio2() {
   const [projectFilter, setProjectFilter] = useState("All");
   const [activeProject, setActiveProject] = useState(null);
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [resumePreviewOpen, setResumePreviewOpen] = useState(false);
+
+  const openResumePreview = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    setResumePreviewOpen(true);
+  };
+
+  const closeResumePreview = () => setResumePreviewOpen(false);
 
   useEffect(() => {
     document.title = "Priyanshu Kumar — MERN Stack Developer";
@@ -837,6 +846,17 @@ export default function Portfolio2() {
     const t = setTimeout(() => setHeroIn(true), 120);
     return () => { window.removeEventListener("scroll", onScroll); clearTimeout(t); document.head.removeChild(link); };
   }, []);
+
+  useEffect(() => {
+    if (!resumePreviewOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeResumePreview();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [resumePreviewOpen]);
 
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const handleMockTilt = (e) => {
@@ -925,12 +945,16 @@ export default function Portfolio2() {
             >
               {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
             </button>
-            <a href="#" className="cta-desktop" style={{
-              display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 500,
-              border: `1px solid ${C.line}`, borderRadius: 999, padding: "10px 20px", color: C.text, textDecoration: "none",
-            }}>
-              <Download size={14} /> Download CV
-            </a>
+            <button
+              type="button"
+              onClick={openResumePreview}
+              className="cta-desktop"
+              style={{
+                display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 500,
+                border: `1px solid ${C.line}`, borderRadius: 999, padding: "10px 20px", color: C.text, background: "transparent", cursor: "pointer",
+              }}>
+              <Download size={14} /> Preview Resume
+            </button>
             <button
               onClick={() => setMobileMenuOpen((o) => !o)}
               aria-label="Toggle menu"
@@ -968,20 +992,57 @@ export default function Portfolio2() {
                 {l}
               </a>
             ))}
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              type="button"
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                openResumePreview(e);
+              }}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 fontSize: 14, fontWeight: 600, color: "#04231A", background: C.green,
-                borderRadius: 999, padding: "13px 20px", textDecoration: "none", marginTop: 18,
+                borderRadius: 999, padding: "13px 20px", textDecoration: "none", marginTop: 18, cursor: "pointer",
               }}
             >
-              <Download size={14} /> Download CV
-            </a>
+              <Download size={14} /> Preview Resume
+            </button>
           </nav>
         </div>
       </header>
+      {resumePreviewOpen && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 1100, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+          <div style={{ width: "100%", maxWidth: 1080, height: "90vh", background: C.bgCard, borderRadius: 24, overflow: "hidden", boxShadow: "0 36px 120px rgba(0,0,0,0.3)", display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", borderBottom: `1px solid ${C.line}`, background: C.bgCard }}>
+              <div>
+                <p style={{ margin: 0, fontSize: 16, fontWeight: 700, color: C.text }}>Resume preview</p>
+                <p style={{ margin: "6px 0 0", fontSize: 13, color: C.textFaint }}>Preview the resume here, then download it if everything looks good.</p>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <a href={SOCIAL_LINKS.resume} download style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 16px", background: C.green, color: "#04231A", borderRadius: 999, textDecoration: "none", fontWeight: 600 }}>
+                  <Download size={14} /> Download
+                </a>
+                <button type="button" onClick={closeResumePreview} style={{ padding: "10px 16px", background: "transparent", border: `1px solid ${C.line}`, borderRadius: 999, color: C.text, cursor: "pointer", fontWeight: 600 }}>
+                  Close
+                </button>
+              </div>
+            </div>
+            <object data={SOCIAL_LINKS.resume} type="application/pdf" width="100%" height="100%">
+              <div style={{ padding: 28, display: "flex", flexDirection: "column", gap: 16, justifyContent: "center", alignItems: "center", height: "100%", textAlign: "center" }}>
+                <p style={{ margin: 0, fontSize: 16, color: C.text }}>Your browser cannot display the PDF preview directly.</p>
+                <p style={{ margin: 0, fontSize: 14, color: C.textSoft }}>Use the download button or open the resume in a new tab.</p>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+                  <a href={SOCIAL_LINKS.resume} target="_blank" rel="noreferrer" style={{ padding: "10px 16px", background: C.green, color: "#04231A", borderRadius: 999, textDecoration: "none", fontWeight: 600 }}>
+                    Open in new tab
+                  </a>
+                  <a href={SOCIAL_LINKS.resume} download style={{ padding: "10px 16px", background: C.green, color: "#04231A", borderRadius: 999, textDecoration: "none", fontWeight: 600 }}>
+                    Download
+                  </a>
+                </div>
+              </div>
+            </object>
+          </div>
+        </div>
+      )}
 
       <main>
 
