@@ -1,5 +1,131 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Github, Linkedin, Mail, Code2, ArrowUpRight, Download, Sun, Moon, MessageCircle, Send, X, GraduationCap, Award, Phone, MapPin, Menu, Atom, FileCode2, Layers, Wind, Server, Zap, Database, KeyRound, Globe, FlaskConical, GitBranch, Rocket, Terminal as TerminalIcon, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Mail, Code2, ArrowUpRight, Download, Sun, Moon, MessageCircle, Send, X, GraduationCap, Award, Phone, MapPin, Menu, Atom, FileCode2, Layers, Wind, Server, Zap, Database, KeyRound, Globe, FlaskConical, GitBranch, Rocket, Terminal as TerminalIcon, ExternalLink, Layout, ShieldCheck, Check, Copy, Sparkles, CheckCircle2 } from "lucide-react";
+
+const CODE_SNIPPETS = [
+  {
+    id: "express",
+    label: "Express API",
+    code: `// Express.js Controller with JWT Authentication
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
+
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+    return res.json({ _id: user._id, name: user.name, token });
+  }
+  res.status(401).json({ message: "Invalid email or password" });
+};`,
+  },
+  {
+    id: "react",
+    label: "React Hook",
+    code: `// Custom React Hook for Async API State
+import { useState, useEffect } from "react";
+
+export function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    fetch(url)
+      .then((r) => r.json())
+      .then((res) => active && setData(res))
+      .finally(() => active && setLoading(false));
+    return () => { active = false; };
+  }, [url]);
+
+  return { data, loading };
+}`,
+  },
+  {
+    id: "mongo",
+    label: "MongoDB Schema",
+    code: `// Mongoose Schema & Data Model Definition
+import mongoose from "mongoose";
+
+const appointmentSchema = new mongoose.Schema(
+  {
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    doctorId: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor", required: true },
+    status: { type: String, enum: ["pending", "confirmed"], default: "pending" },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("Appointment", appointmentSchema);`,
+  },
+];
+
+const WORKFLOW_STEPS = [
+  {
+    num: "01",
+    title: "Planning & Architecture",
+    desc: "Defining project requirements, mapping wireframes, and designing scalable database schemas & REST API routes.",
+    icon: Sparkles,
+  },
+  {
+    num: "02",
+    title: "Backend API Engineering",
+    desc: "Building fast, secure Express & Node.js backend services featuring JWT auth, middlewares, and MongoDB integration.",
+    icon: Server,
+  },
+  {
+    num: "03",
+    title: "Frontend Crafting",
+    desc: "Creating pixel-perfect React SPAs with TypeScript, Tailwind CSS, and global state management via Redux Toolkit.",
+    icon: Atom,
+  },
+  {
+    num: "04",
+    title: "Testing & Cloud Deployment",
+    desc: "Writing unit & component tests with Vitest, optimizing bundle assets, and deploying live to Vercel/Netlify.",
+    icon: CheckCircle2,
+  },
+];
+
+const SERVICES = [
+  {
+    title: "Full-Stack Web Development",
+    icon: Code2,
+    desc: "Building end-to-end web applications from ground up using MERN stack (MongoDB, Express.js, React.js, Node.js) with scalable architecture.",
+    tags: ["React.js", "Node.js", "Express.js", "MongoDB"],
+  },
+  {
+    title: "Frontend Development & UI/UX",
+    icon: Layout,
+    desc: "Crafting pixel-perfect, interactive, and responsive single page applications with React, TypeScript, Tailwind CSS, and Redux Toolkit.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Redux"],
+  },
+  {
+    title: "RESTful API & Backend Services",
+    icon: Server,
+    desc: "Designing secure, production-ready REST APIs with Express and Node.js, complete with JWT authentication and role-based authorization.",
+    tags: ["Node.js", "Express.js", "JWT Auth", "REST APIs"],
+  },
+  {
+    title: "Database Architecture & Optimization",
+    icon: Database,
+    desc: "Designing MongoDB schemas with Mongoose, writing efficient data queries, structuring NoSQL databases, and managing database performance.",
+    tags: ["MongoDB", "Mongoose", "NoSQL", "Data Modeling"],
+  },
+  {
+    title: "Third-Party API & Service Integration",
+    icon: Globe,
+    desc: "Integrating third-party services, payment gateways, auth providers, external public APIs, and real-time data feeds into full-stack applications.",
+    tags: ["REST Integration", "Webhooks", "JSON", "APIs"],
+  },
+  {
+    title: "Testing, Refactoring & Deployment",
+    icon: ShieldCheck,
+    desc: "Writing unit/component tests with Vitest, refactoring legacy code for optimization, and deploying web applications to platforms like Vercel and Netlify.",
+    tags: ["Vitest", "Vercel", "Netlify", "Git & GitHub"],
+  },
+];
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer } from "recharts";
 
 const FONT_LINK = "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap";
@@ -174,6 +300,69 @@ const PROFICIENCY = [
   { subject: "REST APIs", value: 85 },
   { subject: "DSA", value: 82 },
 ];
+
+function CodeShowcase({ C, mono }) {
+  const [activeTab, setActiveTab] = useState(CODE_SNIPPETS[0].id);
+  const [copied, setCopied] = useState(false);
+
+  const snippet = CODE_SNIPPETS.find((s) => s.id === activeTab);
+
+  const handleCopy = () => {
+    if (snippet) {
+      navigator.clipboard.writeText(snippet.code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <div style={{ background: C.bgCard, border: `1px solid ${C.line}`, borderRadius: 18, overflow: "hidden", marginTop: 24 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 18px", borderBottom: `1px solid ${C.line}`, background: C.bgCard2, flexWrap: "wrap", gap: 10 }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#F55" }} />
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#FB5" }} />
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#2FE6A4" }} />
+          </div>
+          <div style={{ display: "flex", gap: 6, marginLeft: 12 }}>
+            {CODE_SNIPPETS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setActiveTab(s.id)}
+                style={{
+                  ...mono, fontSize: 11, padding: "5px 12px", borderRadius: 999, border: "none", cursor: "pointer",
+                  background: activeTab === s.id ? C.greenDim : "transparent",
+                  color: activeTab === s.id ? C.green : C.textSoft,
+                  fontWeight: activeTab === s.id ? 600 : 400, transition: "all 0.2s ease",
+                }}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <button
+          onClick={handleCopy}
+          style={{
+            display: "flex", alignItems: "center", gap: 6, background: "transparent",
+            border: `1px solid ${C.line}`, borderRadius: 8, padding: "5px 10px",
+            color: copied ? C.green : C.textSoft, fontSize: 11, ...mono, cursor: "pointer",
+          }}
+        >
+          {copied ? <Check size={13} /> : <Copy size={13} />}
+          {copied ? "Copied!" : "Copy Code"}
+        </button>
+      </div>
+      <pre style={{
+        padding: "20px 22px", margin: 0, overflowX: "auto",
+        ...mono, fontSize: 12, lineHeight: 1.65, color: C.text,
+        background: C.bgCard,
+      }}>
+        <code>{snippet.code}</code>
+      </pre>
+    </div>
+  );
+}
 
 const EDUCATION = [
   { year: "2023 — 2026", degree: "Master of Computer Applications (MCA)", org: "Lovely Professional University (Distance)", detail: "CGPA: 7.10 · Full Stack Web Development, Database Management, Software Engineering" },
@@ -420,7 +609,7 @@ function CodeMock() {
         <g fontFamily="'JetBrains Mono', monospace" fontSize="11">
           <text x="22" y="52" fill="#7C7C7C">const</text>
           <text x="66" y="52" fill="#2FE6A4">App</text>
-          <text x="98" y="52" fill="#7C7C7C">= () =&gt; {"{"}</text>
+          <text x="98" y="52" fill="#7C7C7C">{"= () => {"}</text>
           <text x="38" y="72" fill="#8FA6FF">useState</text>
           <text x="100" y="72" fill="#7C7C7C">(true)</text>
           <text x="38" y="92" fill="#7C7C7C">return (</text>
@@ -440,8 +629,250 @@ function CodeMock() {
   );
 }
 
+// ── Portfolio Wallet (Projects Section) ──────────────────────────────────────
+const WALLET_PROJECTS = [
+  {
+    id: "urbancart",
+    label: "UrbanCart",
+    category: "Frontend",
+    tags: ["React", "TypeScript", "Redux Toolkit", "Tailwind"],
+    desc: "Premium e-commerce SPA managing 100+ products with cart, wishlist, search & filter, plus localStorage-based auth and full Vitest test coverage.",
+    stars: "\u2605\u2605\u2605\u2605\u2605",
+    bg: "linear-gradient(135deg, #2FE6A4 0%, #0B3B2C 100%)",
+    github: "https://github.com/priynshu30/UrbanCart",
+    live: "https://rococo-halva-b57f5a.netlify.app/",
+  },
+  {
+    id: "doccare",
+    label: "DocCare",
+    category: "Full-Stack",
+    tags: ["React", "Node.js", "Express", "MongoDB"],
+    desc: "Full-stack doctor appointment platform with JWT auth, role-based access, and 10+ REST APIs for booking, reports, and history tracking.",
+    stars: "\u2605\u2605\u2605\u2605\u2606",
+    bg: "linear-gradient(135deg, #8FA6FF 0%, #141633 100%)",
+    github: "https://github.com/priynshu30/doctor-appointment",
+    live: "https://client-nine-lake-91.vercel.app/",
+  },
+  {
+    id: "entertainment",
+    label: "Entertainment App",
+    category: "Full-Stack",
+    tags: ["React", "Node.js", "TMDB API", "Redux"],
+    desc: "Movie & TV platform integrated with TMDB API — real-time search, bookmarks, authentication, and global state via Redux Toolkit.",
+    stars: "\u2605\u2605\u2605\u2605\u2606",
+    bg: "linear-gradient(135deg, #D9B36C 0%, #332B14 100%)",
+    github: "https://github.com/priynshu30/entertainment-app",
+    live: "https://entertainment-app.vercel.app",
+  },
+  {
+    id: "resume",
+    label: "Resume Analysis",
+    category: "AI / Full-Stack",
+    tags: ["React", "Vite", "AI", "Tailwind"],
+    desc: "AI-powered resume analysis experience that scores resumes, highlights skill gaps, and suggests improvements for job applications.",
+    stars: "\u2605\u2605\u2605\u2605\u2605",
+    bg: "linear-gradient(135deg, #6C63FF 0%, #1E1B4B 100%)",
+    github: "https://github.com/priynshu30/Resume-Analysis-",
+    live: "https://resume-analysis-gamma.vercel.app/",
+  },
+  {
+    id: "realestate",
+    label: "Real Estate",
+    category: "Full-Stack",
+    tags: ["React", "Vite", "Tailwind", "Web App"],
+    desc: "Modern property search experience with filters, listings, and responsive UI for home browsing and agent discovery.",
+    stars: "\u2605\u2605\u2605\u2605\u2606",
+    bg: "linear-gradient(135deg, #5B9AFF 0%, #1D2F6F 100%)",
+    github: "https://github.com/priynshu30/Real-state",
+    live: "https://real-state-puce.vercel.app/",
+  },
+];
+
+function PortfolioWallet({ C }) {
+  const [revealed, setRevealed] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const mono = { fontFamily: "'JetBrains Mono', monospace" };
+
+  const cardPositions = [
+    { bottom: 120, zIndex: 10, delay: "0.1s" },
+    { bottom: 100, zIndex: 20, delay: "0.2s" },
+    { bottom: 80,  zIndex: 30, delay: "0.3s" },
+    { bottom: 60,  zIndex: 40, delay: "0.4s" },
+    { bottom: 40,  zIndex: 50, delay: "0.5s" },
+  ];
+
+  const getCardTransform = (idx) => {
+    if (!revealed) return "translateY(0)";
+    const base = [
+      "translateY(-110px) rotate(-6deg)",
+      "translateY(-85px)  rotate(-3deg)",
+      "translateY(-58px)  rotate(0deg)",
+      "translateY(-32px)  rotate(3deg)",
+      "translateY(-10px)  rotate(0deg)",
+    ];
+    if (hoveredCard === idx) {
+      return "translateY(-75px) scale(1.06) rotate(0deg)";
+    }
+    return base[idx];
+  };
+
+  const activeProject = hoveredCard !== null ? WALLET_PROJECTS[hoveredCard] : null;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32 }}>
+
+      {/* ── Wallet ── */}
+      <div
+        className="pw-wallet-outer"
+        onMouseEnter={() => setRevealed(true)}
+        onMouseLeave={() => { setRevealed(false); setHoveredCard(null); }}
+        style={{
+          position: "relative", width: 280, height: 300,
+          cursor: "pointer", perspective: "1000px",
+          display: "flex", justifyContent: "center", alignItems: "flex-end",
+          transition: "transform 0.4s ease", flexShrink: 0,
+        }}
+      >
+        {/* Wallet Back */}
+        <div style={{
+          position: "absolute", bottom: 0, width: 280, height: 200,
+          background: "#0A2318", borderRadius: "22px 22px 60px 60px", zIndex: 5,
+          boxShadow: "inset 0 25px 35px rgba(0,0,0,0.4), inset 0 5px 15px rgba(0,0,0,0.5)",
+        }} />
+
+        {/* Project Cards inside Wallet */}
+        {WALLET_PROJECTS.map((proj, idx) => (
+          <div
+            key={proj.id}
+            onMouseEnter={() => revealed && setHoveredCard(idx)}
+            onMouseLeave={() => setHoveredCard(null)}
+            style={{
+              position: "absolute", width: 260, height: 140, left: 10,
+              borderRadius: 16, padding: 18, background: proj.bg, color: "#fff",
+              boxShadow: "inset 0 1px 1px rgba(255,255,255,0.25), 0 -4px 15px rgba(0,0,0,0.15)",
+              bottom: cardPositions[idx].bottom,
+              zIndex: hoveredCard === idx ? 100 : cardPositions[idx].zIndex,
+              transform: getCardTransform(idx),
+              transition: "transform 0.6s cubic-bezier(0.34,1.56,0.64,1), z-index 0s",
+              animation: `pw-slideIn 0.8s cubic-bezier(0.2,0.8,0.2,1) ${cardPositions[idx].delay} backwards`,
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>
+                  {proj.label}
+                </span>
+                <span style={{ fontSize: 9, ...mono, background: "rgba(0,0,0,0.28)", padding: "3px 8px", borderRadius: 999, letterSpacing: 1 }}>
+                  {proj.category}
+                </span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+                <div>
+                  <span style={{ fontSize: 8, opacity: 0.65, textTransform: "uppercase", letterSpacing: 1, display: "block", marginBottom: 2 }}>Stack</span>
+                  <span style={{ fontSize: 9, fontWeight: 500, ...mono, opacity: 0.9 }}>
+                    {proj.tags.slice(0, 2).join(" · ")}{proj.tags.length > 2 ? " ···" : ""}
+                  </span>
+                </div>
+                <span style={{ fontSize: 13, opacity: 0.85, letterSpacing: 2 }}>{proj.stars}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Pocket / Wallet Front */}
+        <div style={{
+          position: "absolute", bottom: 0, width: 280, height: 160, zIndex: 40,
+          filter: "drop-shadow(0 15px 25px rgba(10,35,24,0.55))",
+        }}>
+          <svg viewBox="0 0 280 160" fill="none" style={{ width: "100%", height: "100%" }}>
+            <path d="M 0 20 C 0 10, 5 10, 10 10 C 20 10, 25 25, 40 25 L 240 25 C 255 25, 260 10, 270 10 C 275 10, 280 10, 280 20 L 280 120 C 280 155, 260 160, 240 160 L 40 160 C 20 160, 0 155, 0 120 Z" fill="#0A2318" />
+            <path d="M 8 22 C 8 16, 12 16, 15 16 C 23 16, 27 29, 40 29 L 240 29 C 253 29, 257 16, 265 16 C 268 16, 272 16, 272 22 L 272 120 C 272 150, 255 152, 240 152 L 40 152 C 25 152, 8 152, 8 120 Z"
+              stroke="#2FE6A4" strokeWidth="1.5" strokeDasharray="6 4" strokeOpacity="0.4" />
+          </svg>
+          <div style={{ position: "absolute", top: 36, width: "100%", textAlign: "center", zIndex: 50, display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
+            <div style={{ position: "relative", height: 30, width: "100%" }}>
+              <div style={{ color: "#3d8a6a", fontSize: 20, letterSpacing: 6, opacity: revealed ? 0 : 1, transition: "opacity 0.3s", position: "absolute", width: "100%", textAlign: "center", ...mono }}>
+                ● ● ● ● ●
+              </div>
+              <div style={{ color: "#2FE6A4", fontSize: 19, fontWeight: 700, fontFamily: "'Anton', sans-serif", letterSpacing: 2, opacity: revealed ? 1 : 0, transform: revealed ? "translateY(0)" : "translateY(8px)", transition: "opacity 0.3s, transform 0.3s", position: "absolute", width: "100%", textAlign: "center" }}>
+                5 Projects
+              </div>
+            </div>
+            <div style={{ color: "#3d7a5e", fontSize: 10, fontWeight: 500, ...mono, letterSpacing: 1 }}>
+              {revealed ? "hover a card \u2191" : "Shipped & Live"}
+            </div>
+            <div style={{ marginTop: 4, height: 18, width: 18, position: "relative", opacity: revealed ? 1 : 0.3, transition: "opacity 0.3s" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2FE6A4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ position: "absolute", top: 0, left: 0, opacity: revealed ? 0 : 1, transform: revealed ? "scale(0.5)" : "scale(1)", transition: "opacity 0.3s, transform 0.3s" }}>
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /><line x1="3" y1="3" x2="21" y2="21" />
+              </svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2FE6A4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ position: "absolute", top: 0, left: 0, opacity: revealed ? 1 : 0, transform: revealed ? "scale(1.1)" : "scale(0.5)", transition: "opacity 0.3s, transform 0.3s" }}>
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes pw-slideIn { 0% { transform: translateY(-100px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+          @keyframes pw-cardIn  { 0% { opacity: 0; transform: translateY(14px) scale(0.97); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+          .pw-wallet-outer:hover { transform: translateY(-6px); }
+        `}</style>
+      </div>
+
+      {/* ── Project Detail Card (slides in below on card hover) ── */}
+      <div style={{
+        width: "100%", maxWidth: 560,
+        opacity: activeProject ? 1 : 0,
+        transform: activeProject ? "translateY(0)" : "translateY(14px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        pointerEvents: activeProject ? "auto" : "none",
+        minHeight: 180,
+      }}>
+        {activeProject && (
+          <div style={{ background: C.bgCard, border: `1px solid ${C.line}`, borderRadius: 20, overflow: "hidden", animation: "pw-cardIn 0.3s ease forwards" }}>
+            {/* Banner */}
+            <div style={{ height: 90, background: activeProject.bg, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+              <span style={{ fontFamily: "'Anton', sans-serif", fontSize: 34, color: "rgba(255,255,255,0.92)", textTransform: "uppercase" }}>
+                {activeProject.label.slice(0, 2)}
+              </span>
+              <div style={{ display: "flex", gap: 10 }}>
+                <a href={activeProject.github} target="_blank" rel="noreferrer"
+                  style={{ width: 34, height: 34, borderRadius: "50%", background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textDecoration: "none" }}>
+                  <Github size={15} />
+                </a>
+                <a href={activeProject.live} target="_blank" rel="noreferrer"
+                  style={{ width: 34, height: 34, borderRadius: "50%", background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", textDecoration: "none" }}>
+                  <ExternalLink size={15} />
+                </a>
+              </div>
+            </div>
+            {/* Body */}
+            <div style={{ padding: "20px 24px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                <h3 style={{ fontSize: 20, fontWeight: 700, margin: 0, color: C.text }}>{activeProject.label}</h3>
+                <span style={{ ...mono, fontSize: 10, color: C.green, background: C.greenDim, borderRadius: 999, padding: "4px 10px" }}>{activeProject.category}</span>
+              </div>
+              <p style={{ color: C.textSoft, fontSize: 13.5, lineHeight: 1.7, margin: "0 0 14px" }}>{activeProject.desc}</p>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                {activeProject.tags.map((t) => (
+                  <span key={t} style={{ ...mono, fontSize: 10, color: C.text, border: `1px solid ${C.line}`, borderRadius: 999, padding: "5px 11px" }}>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function botReply(input) {
   const q = input.toLowerCase();
+  if (/(service|offer|provide|work for hire)/.test(q)) {
+    return `Services I offer: ${SERVICES.map((s) => s.title).join(", ")}. Check the Services section for full details!`;
+  }
   if (/(skill|tech|stack|know|use)/.test(q)) {
     return `I mainly work with ${SKILLS.slice(0, 7).map((s) => s.name).join(", ")} — the MERN stack end to end.`;
   }
@@ -479,8 +910,9 @@ function botReply(input) {
 }
 
 const TERMINAL_COMMANDS = {
-  help: "Available commands: whoami, skills, projects, experience, education, contact, sudo hire-me, clear",
+  help: "Available commands: whoami, services, skills, projects, experience, education, contact, sudo hire-me, clear",
   whoami: "Priyanshu Kumar — MERN Stack Developer based in Agra, UP, India.",
+  services: SERVICES.map((s) => s.title).join(" | "),
   skills: SKILLS.map((s) => s.name).join(", "),
   projects: PROJECTS.map((p) => `${p.name} (${p.category})`).join(", "),
   experience: EXPERIENCE.map((e) => `${e.role} @ ${e.org}`).join(" | "),
@@ -809,7 +1241,7 @@ function ContactForm({ C, mono }) {
   );
 }
 
-export default function Portfolio2() {
+export default function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -882,7 +1314,7 @@ export default function Portfolio2() {
   const mono = { fontFamily: "'JetBrains Mono', monospace" };
   const sans = { fontFamily: "'Inter', sans-serif" };
 
-  const navLinks = ["About Me", "Experience", "Education", "Projects", "Contact Me"];
+  const navLinks = ["About Me", "Services", "Process", "Experience", "Education", "Projects", "Contact Me"];
 
   return (
     <div className="portfolio-root" style={{ background: C.bg, color: C.text, minHeight: "100vh", transition: "background 0.35s ease, color 0.35s ease", ...sans }}>
@@ -1054,6 +1486,10 @@ export default function Portfolio2() {
             opacity: heroIn ? 1 : 0, transform: heroIn ? "translateY(0)" : "translateY(24px)",
             transition: "opacity 0.9s ease, transform 0.9s ease",
           }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: C.greenDim, border: `1px solid ${C.green}35`, borderRadius: 999, padding: "6px 14px", marginBottom: 20 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, boxShadow: `0 0 10px ${C.green}` }} className="glow-pulse" />
+              <span style={{ ...mono, fontSize: 12, color: C.green, fontWeight: 500 }}>Available for Full-Time & Freelance Roles</span>
+            </div>
             <p style={{ color: C.green, fontSize: 15, fontWeight: 500, marginBottom: 18 }}>Hi, I am Priyanshu Kumar</p>
             <h1 style={{ ...display, fontSize: "clamp(38px, 6vw, 68px)", lineHeight: 1.02, letterSpacing: "0.01em", margin: "0 0 24px", textTransform: "uppercase" }}>
               MERN Stack<br /><span style={{ color: "#7C7C78" }}>Developer</span>
@@ -1185,8 +1621,95 @@ export default function Portfolio2() {
               </RadarChart>
             </ResponsiveContainer>
           </div>
+          <CodeShowcase C={C} mono={mono} />
           </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Services</p>
+          <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>
+            What I <span style={{ color: C.green }}>Provide</span>
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
+            {SERVICES.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <Reveal key={s.title} delay={i * 0.08} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                  <div
+                    className="service-card"
+                    style={{
+                      background: C.bgCard,
+                      border: `1px solid ${C.line}`,
+                      borderRadius: 18,
+                      padding: 28,
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      position: "relative",
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+                        <div style={{
+                          width: 46, height: 46, borderRadius: 14,
+                          background: C.greenDim, display: "flex", alignItems: "center", justifyContent: "center",
+                        }}>
+                          <Icon size={22} style={{ color: C.green }} />
+                        </div>
+                        <span style={{ ...mono, fontSize: 11, color: C.textFaint }}>0{i + 1}</span>
+                      </div>
+                      <h3 style={{ fontSize: 19, fontWeight: 600, margin: "0 0 10px", color: C.text, lineHeight: 1.3 }}>{s.title}</h3>
+                      <p style={{ color: C.textSoft, fontSize: 14, lineHeight: 1.7, margin: "0 0 20px" }}>{s.desc}</p>
+                    </div>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto" }}>
+                      {s.tags.map((t) => (
+                        <span key={t} style={{ ...mono, fontSize: 10, color: C.textSoft, border: `1px solid ${C.line}`, borderRadius: 999, padding: "4px 10px", background: C.bgCard2 }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section id="process" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}`, background: C.bgCard2 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Development Process</p>
+          <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>
+            How I <span style={{ color: C.green }}>Build</span>
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
+            {WORKFLOW_STEPS.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <Reveal key={step.num} delay={i * 0.1} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                  <div style={{
+                    background: C.bgCard, border: `1px solid ${C.line}`, borderRadius: 18, padding: 26, flex: 1,
+                    display: "flex", flexDirection: "column", justifyContent: "space-between",
+                  }}>
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                        <span style={{ ...mono, fontSize: 24, fontWeight: 700, color: C.green }}>{step.num}</span>
+                        <div style={{ width: 38, height: 38, borderRadius: "50%", background: C.greenDim, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Icon size={18} style={{ color: C.green }} />
+                        </div>
+                      </div>
+                      <h3 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 10px", color: C.text }}>{step.title}</h3>
+                      <p style={{ color: C.textSoft, fontSize: 13.5, lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -1295,14 +1818,16 @@ export default function Portfolio2() {
               ))}
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
             {PROJECTS.filter((p) => projectFilter === "All" || p.category === projectFilter).map((p, i) => (
-              <Reveal key={p.name} delay={i * 0.1}>
+              <Reveal key={p.name} delay={i * 0.1} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                 <a href="#" className="proj-card" onMouseMove={handleCardTilt} onMouseLeave={resetCardTilt}
                   onClick={(e) => { e.preventDefault(); setActiveProject(p); }}
                   style={{
-                  display: "block", background: C.bgCard, border: `1px solid ${C.line}`, borderRadius: 16,
+                  display: "flex", flexDirection: "column", justifyContent: "space-between",
+                  background: C.bgCard, border: `1px solid ${C.line}`, borderRadius: 16,
                   overflow: "hidden", textDecoration: "none", color: C.text, position: "relative", cursor: "pointer",
+                  height: "100%", flex: 1,
                 }}>
                   <div className="proj-banner" style={{
                     height: 140, background: `linear-gradient(135deg, ${p.from} 0%, ${p.to} 100%)`,
@@ -1314,7 +1839,7 @@ export default function Portfolio2() {
                     </span>
                     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.12)" }} />
                     <span style={{ position: "absolute", top: 12, left: 12, ...mono, fontSize: 10, color: "#fff", background: "rgba(0,0,0,0.35)", borderRadius: 999, padding: "4px 10px" }}>{p.category}</span>
-                    <div style={{ position: "absolute", top: 12, right: 12, display: "flex", gap: 8 }}>
+                    <div style={{ position: "absolute", top: 12, right: 12, display: "flex", gap: 8, zIndex: 10 }}>
                       <a
                         href={p.github} target="_blank" rel="noreferrer" aria-label="View on GitHub"
                         onClick={(e) => e.stopPropagation()}
@@ -1331,13 +1856,15 @@ export default function Portfolio2() {
                       </a>
                     </div>
                   </div>
-                  <div style={{ padding: 26 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
-                      <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>{p.name}</h3>
-                      <ArrowUpRight size={18} className="proj-arrow" style={{ color: C.green }} />
+                  <div style={{ padding: 26, flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
+                        <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>{p.name}</h3>
+                        <ArrowUpRight size={18} className="proj-arrow" style={{ color: C.green }} />
+                      </div>
+                      <p style={{ color: C.textSoft, fontSize: 14, lineHeight: 1.6, margin: "0 0 20px" }}>{p.desc}</p>
                     </div>
-                    <p style={{ color: C.textSoft, fontSize: 14, lineHeight: 1.6, margin: "0 0 20px" }}>{p.desc}</p>
-                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto" }}>
                       {p.tags.map((t) => (
                         <span key={t} style={{ ...mono, fontSize: 10, color: C.green, background: C.greenDim, borderRadius: 999, padding: "5px 10px" }}>{t}</span>
                       ))}

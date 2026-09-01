@@ -1,0 +1,11 @@
+{
+  "name": "priyanshu-portfolio-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix deploy-project run dev",
+    "build": "npm --prefix deploy-project run build",
+    "preview": "npm --prefix deploy-project run preview",
+    "start": "npm --prefix deploy-project run dev"
+  }
+}
