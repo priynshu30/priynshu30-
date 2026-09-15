@@ -1056,6 +1056,7 @@ function ChatBot({ C, mono, display }) {
       </button>
 
       <div
+        className="chat-window"
         style={{
           position: "fixed", bottom: 96, right: 26, zIndex: 100,
           width: 340, maxWidth: "calc(100vw - 40px)", height: 460, maxHeight: "calc(100vh - 140px)",
@@ -1346,7 +1347,7 @@ export default function Portfolio() {
         borderBottom: scrolled ? `1px solid ${C.line}` : "1px solid transparent",
         transition: "all 0.35s ease",
       }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="header-inner" style={{ maxWidth: 1200, margin: "0 auto", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <a href="#top" style={{ fontSize: 20, fontWeight: 700, color: C.text, textDecoration: "none" }}>Priyanshu<span style={{ color: C.green }}>.</span></a>
           <nav style={{ display: "none", gap: 32 }} className="dnav">
             {navLinks.map((l) => (
@@ -1410,7 +1411,7 @@ export default function Portfolio() {
           background: C.bg,
           borderTop: mobileMenuOpen ? `1px solid ${C.line}` : "1px solid transparent",
         }}>
-          <nav style={{ display: "flex", flexDirection: "column", padding: "8px 32px 24px" }}>
+          <nav className="mobile-nav-content" style={{ display: "flex", flexDirection: "column", padding: "8px 32px 24px" }}>
             {navLinks.map((l, i) => (
               <a
                 key={l}
@@ -1479,7 +1480,7 @@ export default function Portfolio() {
       <main>
 
       {/* HERO */}
-      <section id="top" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "120px 32px 60px", position: "relative", overflow: "hidden" }}>
+      <section id="top" className="section-hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "120px 32px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 80% 30%, ${C.greenDim}, transparent 45%)` }} />
         <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "1fr", gap: 40, position: "relative" }} className="hero-grid">
           <div style={{
@@ -1556,7 +1557,7 @@ export default function Portfolio() {
       <Marquee items={["React.js", "TypeScript", "Node.js", "Express.js", "MongoDB", "Redux Toolkit", "Tailwind CSS", "JWT Auth", "REST APIs"]} C={C} mono={mono} />
 
       {/* ABOUT */}
-      <section id="aboutme" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
+      <section id="aboutme" className="section-padding" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr", gap: 48 }} className="about-grid">
           <Reveal>
           <div>
@@ -1628,7 +1629,7 @@ export default function Portfolio() {
       </section>
 
       {/* SERVICES */}
-      <section id="services" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
+      <section id="services" className="section-padding" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Services</p>
           <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>
@@ -1680,7 +1681,7 @@ export default function Portfolio() {
       </section>
 
       {/* PROCESS */}
-      <section id="process" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}`, background: C.bgCard2 }}>
+      <section id="process" className="section-padding" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}`, background: C.bgCard2 }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Development Process</p>
           <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>
@@ -1714,7 +1715,7 @@ export default function Portfolio() {
       </section>
 
       {/* EXPERIENCE */}
-      <section id="experience" style={{ padding: "100px 32px", background: C.bgCard, borderTop: `1px solid ${C.line}` }}>
+      <section id="experience" className="section-padding" style={{ padding: "100px 32px", background: C.bgCard, borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Experience</p>
           <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>Where I've worked</h2>
@@ -1726,7 +1727,7 @@ export default function Portfolio() {
                   padding: "26px 0 26px 20px", borderTop: i === 0 ? "none" : `1px solid ${C.line}`,
                 }}>
                   <span style={{
-                    position: "absolute", left: -30, top: 30, width: 10, height: 10, borderRadius: "50%",
+                    position: "absolute", left: -29, top: 32, width: 10, height: 10, borderRadius: "50%",
                     background: C.green, boxShadow: `0 0 0 4px ${C.bgCard}`,
                   }} />
                   <div style={{ maxWidth: 560 }}>
@@ -1743,7 +1744,7 @@ export default function Portfolio() {
       </section>
 
       {/* EDUCATION */}
-      <section id="education" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
+      <section id="education" className="section-padding" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Education</p>
           <h2 style={{ ...display, fontSize: "clamp(28px, 4vw, 40px)", textTransform: "uppercase", margin: "0 0 48px" }}>Qualification</h2>
@@ -1795,7 +1796,7 @@ export default function Portfolio() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
+      <section id="projects" className="section-padding" style={{ padding: "100px 32px", borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Projects</p>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 20, marginBottom: 36 }}>
@@ -1878,7 +1879,7 @@ export default function Portfolio() {
       </section>
 
       {/* CODING PROFILE */}
-      <section id="coding" style={{ padding: "0 32px 100px" }}>
+      <section id="coding" className="section-coding" style={{ padding: "0 32px 100px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Coding Profile</p>
           <h2 style={{ ...display, fontSize: "clamp(24px, 3.4vw, 34px)", textTransform: "uppercase", margin: "0 0 36px" }}>Stats &amp; problem solving</h2>
@@ -1891,7 +1892,7 @@ export default function Portfolio() {
 
 
       {/* CONTACT */}
-      <section id="contactme" style={{ padding: "120px 32px 60px", borderTop: `1px solid ${C.line}` }}>
+      <section id="contactme" className="section-contact" style={{ padding: "120px 32px 60px", borderTop: `1px solid ${C.line}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <p style={{ color: C.green, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>Contact Me</p>
@@ -1944,8 +1945,94 @@ export default function Portfolio() {
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} C={C} mono={mono} display={display} />
 
       <style>{`
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+        html, body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+          margin: 0;
+          padding: 0;
+          touch-action: pan-y pinch-zoom;
+          -webkit-text-size-adjust: 100%;
+        }
         html { scroll-behavior: smooth; }
-        section[id] { scroll-margin-top: 90px; }
+        section[id] { scroll-margin-top: 80px; }
+        img, svg, video, canvas {
+          max-width: 100%;
+          height: auto;
+        }
+
+        .portfolio-root {
+          width: 100%;
+          max-width: 100vw;
+          overflow-x: hidden;
+        }
+
+        .header-inner {
+          padding: 14px 18px !important;
+        }
+        @media (min-width: 768px) {
+          .header-inner {
+            padding: 20px 32px !important;
+          }
+        }
+
+        .mobile-nav-content {
+          padding: 8px 20px 20px !important;
+        }
+        @media (min-width: 768px) {
+          .mobile-nav-content {
+            padding: 8px 32px 24px !important;
+          }
+        }
+
+        .section-hero {
+          padding: 100px 16px 40px !important;
+        }
+        .section-padding {
+          padding: 60px 16px !important;
+        }
+        .section-coding {
+          padding: 0 16px 60px !important;
+        }
+        .section-contact {
+          padding: 70px 16px 40px !important;
+        }
+
+        @media (min-width: 768px) {
+          .section-hero {
+            padding: 120px 32px 60px !important;
+          }
+          .section-padding {
+            padding: 100px 32px !important;
+          }
+          .section-coding {
+            padding: 0 32px 100px !important;
+          }
+          .section-contact {
+            padding: 120px 32px 60px !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .chat-fab {
+            bottom: 16px !important;
+            right: 16px !important;
+            width: 48px !important;
+            height: 48px !important;
+          }
+          .chat-window {
+            bottom: 74px !important;
+            right: 12px !important;
+            left: 12px !important;
+            width: auto !important;
+            max-width: none !important;
+            height: 420px !important;
+          }
+        }
+
         @keyframes loaderBar { from { width: 0%; } to { width: 100%; } }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .modal-pop { animation: modalPop 0.3s ease forwards; }
